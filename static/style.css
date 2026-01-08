@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+:root {
+    --primary: #4f46e5;
+    --secondary: #10b981;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    background-image: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                      radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%);
+    background-attachment: fixed;
+    color: var(--text);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    max-width: 900px;
+    width: 90%;
+    margin: 20px;
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, #4f46e5, #9333ea);
+    
+    /* Standard property */
+    background-clip: text; 
+    
+    /* Vendor prefixes for Safari/Chrome support */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    /* Fallback for older browsers */
+    color: #4f46e5; 
+}
+
+p.subtitle {
+    color: #64748b;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 25px;
+}
+
+textarea {
+    width: 100%;
+    height: 250px;
+    padding: 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    outline: none;
+}
+
+textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+.button-container {
+    display: flex;
+    gap: 15px;
+}
+
+button {
+    flex: 1;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+#sumBtn {
+    background: var(--primary);
+    color: white;
+}
+
+#sumBtn:hover {
+    background: #4338ca;
+    transform: translateY(-2px);
+}
+
+#downloadBtn {
+    background: var(--secondary);
+    color: white;
+    display: none;
+}
+
+.result-area {
+    margin-top: 40px;
+    background: #f1f5f9;
+    padding: 25px;
+    border-radius: 16px;
+    position: relative;
+    border: 1px dashed #cbd5e1;
+}
+
+.result-area h3 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: var(--primary);
+}
+
+#outputSummary {
+    line-height: 1.6;
+    color: #334155;
+}
+
+/* Loading animation */
+.loader {
+    display: none;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--primary);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

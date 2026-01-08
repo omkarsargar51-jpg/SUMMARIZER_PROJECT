@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Summarizer Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Summarizer Pro</h1>
+        <p class="subtitle">Transform long articles into bite-sized insights using NLP.</p>
+        
+        <div class="input-group">
+            <textarea id="inputText" placeholder="Paste your article or long text here..."></textarea>
+        </div>
+        
+        <div class="button-container">
+            <button onclick="summarizeText()" id="sumBtn">
+                <span id="loader" class="loader" style="display:none;"></span>
+                <span id="btnText">Summarize Article</span>
+            </button>
+            <button id="downloadBtn" onclick="downloadSummary()">Download TXT</button>
+        </div>
+
+        <div class="result-area">
+            <h3>Summary Output</h3>
+            <p id="outputSummary">Your summarized content will appear here...</p>
+        </div>
+    </div>
+
+    <script>
+        async function summarizeText() {
+            const text = document.getElementById('inputText').value;
+            const output = document.getElementById('outputSummary');
+            const btn = document.getElementById('sumBtn');
+            const btnText = document.getElementById('btnText');
+            const loader = document.getElementById('loader');
+            const dlBtn = document.getElementById('downloadBtn');
+
+            if(text.length < 50) return alert("Please enter a longer text (at least 50 characters).");
+
+            // UI State: Loading
+            btnText.innerText = "Processing...";
+            loader.style.display = "inline-block";
+            btn.disabled = true;
+            dlBtn.style.display = "none";
+
+            try {
+                const response = await fetch('/summarize', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ text: text })
+                });
+
+                const data = await response.json();
+                output.innerText = data.summary;
+                
+                if(data.summary && !data.summary.includes("too short")) {
+                    dlBtn.style.display = "block";
+                }
+            } catch (error) {
+                alert("An error occurred while connecting to the server.");
+            } finally {
+                btnText.innerText = "Summarize Article";
+                loader.style.display = "none";
+                btn.disabled = false;
+            }
+        }
+
+        function downloadSummary() {
+            const text = document.getElementById('outputSummary').innerText;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const anchor = document.createElement('a');
+            anchor.download = "ai-summary.txt";
+            anchor.href = window.URL.createObjectURL(blob);
+            anchor.click();
+        }
+    </script>
+</body>
+</html>
